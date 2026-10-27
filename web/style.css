@@ -1006,3 +1006,9 @@ body.sd-call {
     justify-content: flex-end;
   }
 }
+
+#active #sdVoice[data-speaking="true"] {
+  border-color: #b3db47;
+  color: #d4eea0;
+  box-shadow: 0 0 18px #95bd1e35;
+}

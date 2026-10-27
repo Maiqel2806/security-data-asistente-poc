@@ -549,3 +549,198 @@ function publicDemoLabels(){
   window.visualViewport?.addEventListener('resize', resize);
   resize();
 })();
+
+/* === SD: voz local de la asesora === */
+(() => {
+  const toolbar = document.querySelector('.sd-toolbar');
+  const active = document.getElementById('active');
+
+  if (!toolbar || document.getElementById('sdVoice')) return;
+
+  const button = document.createElement('button');
+  button.id = 'sdVoice';
+  button.type = 'button';
+  button.className = 'sd-glass';
+  button.textContent = 'Activar voz';
+  button.setAttribute('aria-pressed', 'false');
+  toolbar.append(button);
+
+  if (!('speechSynthesis' in window)) {
+    button.textContent = 'Voz no disponible';
+    button.onclick = () => notice(
+      'Este navegador no ofrece síntesis de voz. Use las opciones o el chat.'
+    );
+    return;
+  }
+
+  const synth = window.speechSynthesis;
+  let enabled = false;
+  let voice = null;
+  let generation = 0;
+  let utterances = [];
+
+  function findVoice() {
+    const voices = synth.getVoices().filter(v =>
+      v.localService && /^es([-_]|$)/i.test(v.lang)
+    );
+
+    voice = voices.find(v =>
+      /sabina|helena|paulina|monica|mónica/i.test(v.name)
+    ) || voices.find(v => v.default) || voices[0] || null;
+  }
+
+  function stop() {
+    generation++;
+    synth.cancel();
+    utterances = [];
+    button.removeAttribute('data-speaking');
+  }
+
+  function labels() {
+    button.textContent = enabled ? 'Silenciar voz' : 'Activar voz';
+    button.setAttribute('aria-pressed', String(enabled));
+
+    const label = document.querySelector('.sd-call-label');
+    if (label) {
+      label.textContent = enabled
+        ? 'VOZ LOCAL ACTIVA · ESCUCHA PENDIENTE'
+        : 'VOZ DESACTIVADA · ESCUCHA PENDIENTE';
+    }
+
+    const prompt = document.querySelector('#sdChatToggle > span');
+    if (prompt) {
+      prompt.textContent = enabled
+        ? 'Escriba o elija una opción; responderé por voz.'
+        : 'Puede continuar por escrito o con las opciones.';
+    }
+  }
+
+  function speak(text) {
+    if (!enabled || !voice || active.hidden || document.hidden) return;
+
+    stop();
+    const current = generation;
+    const chunks = [];
+
+    // Divide el texto para evitar locuciones demasiado largas.
+    for (const word of text.split(/\s+/)) {
+      const last = chunks.length - 1;
+
+      if (last < 0 || chunks[last].length + word.length > 180) {
+        chunks.push(word);
+      } else {
+        chunks[last] += ' ' + word;
+      }
+    }
+
+    utterances = chunks.map(chunk => {
+      const speech = new SpeechSynthesisUtterance(chunk);
+      speech.voice = voice;
+      speech.lang = voice.lang;
+      speech.rate = 0.96;
+      speech.pitch = 1;
+
+      speech.onstart = () => {
+        if (current === generation) {
+          button.dataset.speaking = 'true';
+        }
+      };
+
+      speech.onerror = event => {
+        if (
+          current !== generation ||
+          ['canceled', 'interrupted'].includes(event.error)
+        ) return;
+
+        enabled = false;
+        stop();
+        labels();
+        notice(
+          'No se pudo reproducir la voz. Pulse Activar voz para reintentar o continúe con Ver opciones.'
+        );
+      };
+
+      return speech;
+    });
+
+    const last = utterances[utterances.length - 1];
+
+    if (last) {
+      last.onend = () => {
+        if (current === generation) {
+          button.removeAttribute('data-speaking');
+          utterances = [];
+        }
+      };
+    }
+
+    for (const speech of utterances) synth.speak(speech);
+  }
+
+  function readStep(s) {
+    if (!s) return;
+
+    const greeting = s.step === 'welcome'
+      ? 'Hola, soy su asesora virtual. Esta es una demostración. '
+      : '';
+
+    speak(
+      greeting +
+      [s.title, s.description, s.note].filter(Boolean).join('. ')
+    );
+  }
+
+  button.onclick = () => {
+    if (enabled) {
+      enabled = false;
+      stop();
+      labels();
+      return;
+    }
+
+    findVoice();
+
+    if (!voice) {
+      notice(
+        'No hay una voz local en español disponible. Instale una voz en español en el dispositivo y vuelva a abrir el navegador.'
+      );
+      return;
+    }
+
+    enabled = true;
+    labels();
+    readStep(state);
+  };
+
+  // Cada actualización del trámite genera su explicación hablada.
+  const originalPaint = paint;
+
+  paint = function(s) {
+    originalPaint(s);
+    readStep(s);
+  };
+
+  // Al terminar, la siguiente persona comienza con el audio apagado.
+  new MutationObserver(() => {
+    if (active.hidden) {
+      enabled = false;
+      stop();
+      labels();
+    }
+  }).observe(active, {
+    attributes: true,
+    attributeFilter: ['hidden']
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      enabled = false;
+      stop();
+      labels();
+    }
+  });
+
+  window.addEventListener('pagehide', stop);
+  synth.addEventListener('voiceschanged', findVoice);
+  findVoice();
+})();
