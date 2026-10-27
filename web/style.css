@@ -1,0 +1,794 @@
+@font-face{font-family:Montserrat;src:url('/assets/Montserrat-400.ttf') format('truetype');font-weight:400;font-display:swap}@font-face{font-family:Montserrat;src:url('/assets/Montserrat-500.ttf') format('truetype');font-weight:500;font-display:swap}@font-face{font-family:Montserrat;src:url('/assets/Montserrat-600.ttf') format('truetype');font-weight:600;font-display:swap}@font-face{font-family:Montserrat;src:url('/assets/Montserrat-700.ttf') format('truetype');font-weight:700;font-display:swap}@font-face{font-family:Montserrat;src:url('/assets/Montserrat-800.ttf') format('truetype');font-weight:800;font-display:swap}
+:root{--navy:#0f2840;--blue:#1a5472;--lime:#95bd1e;--lime-bright:#b3db47;--ink:#0f2840;--muted:#536777;--line:#dce5eb;--bg:#eef3f6;--light:#edf4dc}*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font-family:Montserrat,'Segoe UI',Arial,sans-serif;font-size:18px}button,input{font:inherit}button{cursor:pointer;min-height:52px;border:0;border-radius:12px;padding:12px 20px;font-weight:600;transition:background .18s,border-color .18s,box-shadow .18s}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #779915;outline-offset:4px}button:disabled{opacity:.48;cursor:wait}button:hover:not(:disabled){filter:brightness(1.06)}header{height:104px;padding:0 3.4vw;display:flex;align-items:center;justify-content:space-between;gap:24px;background:#0b2034;border-bottom:1px solid #ffffff14;position:relative;z-index:3}.identity{display:flex;gap:22px;align-items:center}.brand{display:block;background:#fff;padding:10px 16px;border-radius:9px;line-height:0;flex-shrink:0}.brand img{width:218px;height:auto;display:block}.product-name{color:#b7c8d8;font-size:10px;letter-spacing:2.4px;border-left:1px solid #ffffff24;padding-left:22px;line-height:1.8}.product-name strong{color:white;font-weight:600;letter-spacing:4px}.header-actions{display:flex;gap:12px;align-items:center}.demo{font-size:10px;font-weight:600;letter-spacing:1px;color:#c6d8e6;border:1px solid #ffffff20;padding:9px 11px;border-radius:5px}.quiet{background:transparent;color:var(--blue);font-size:14px}header .quiet{color:#c6d8e6;font-size:12px;padding:10px;min-height:44px}header .quiet:hover{background:#ffffff0b}.primary{background:var(--lime);color:var(--navy);box-shadow:0 5px 18px #67830d12}.primary:hover:not(:disabled){background:#abd33b}.idle{min-height:calc(100svh - 104px);position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;padding:25px 4.2vw 22px;color:#fff;background:radial-gradient(ellipse at 50% 42%,#1a54724d 0%,#0f284020 43%,#071c30 90%),#0f2840}.idle:before{content:'';position:absolute;inset:0;background-image:linear-gradient(#8ca9c108 1px,transparent 1px),linear-gradient(90deg,#8ca9c108 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(ellipse,#000,transparent 75%);z-index:-2}.idle-topline{display:flex;justify-content:space-between;color:#8ba6ba;font-size:10px;letter-spacing:2.4px;position:relative;z-index:1}.live-dot{display:flex;align-items:center;gap:9px}.live-dot:before{content:'';width:6px;height:6px;background:var(--lime-bright);border-radius:50%;box-shadow:0 0 12px #b3db4777}.ambient{position:absolute;inset:0;pointer-events:none;z-index:-1;display:grid;place-items:center}.halo{position:absolute;border-radius:50%;width:min(71vw,820px);aspect-ratio:1;border:1px solid #72b1c61a;transform:translateY(-6%)}.halo-one{border-left-color:#6aa9c144;border-right-color:#95bd1e35;box-shadow:0 0 110px #1a547225,inset 0 0 100px #1a547215;animation:orbit-spin 90s linear infinite}.halo-one:before{content:'';position:absolute;width:7px;height:7px;background:#b4cf65;box-shadow:0 0 25px #b4cf65;border-radius:50%;top:14%;left:14%}.halo-two{width:min(58vw,670px);border:1px dashed #77a5bf20;animation:orbit-spin 120s linear reverse infinite}.halo-three{width:min(43vw,490px);border-color:#96bf3526;background:radial-gradient(circle,#26587518 0%,transparent 65%)}.horizon{width:90%;height:1px;position:absolute;top:59%;background:linear-gradient(90deg,transparent,#6a9db329,transparent)}.star{position:absolute;background:#95bd1e;border-radius:50%;width:3px;height:3px;box-shadow:0 0 20px #95bd1e88}.star-one{top:27%;left:17%}.star-two{bottom:24%;right:16%}.idle-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:55px 0 64px}.floating{animation:float 5.8s ease-in-out infinite;will-change:transform}.availability{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:4px;color:#bcdb86;font-weight:500}.availability i{width:7px;height:7px;background:var(--lime);border-radius:50%;box-shadow:0 0 16px #95bd1e80}h1{font-weight:700}.idle h1{font-size:clamp(48px,8.7vw,138px);line-height:1.12;letter-spacing:.035em;margin:18px 0 23px;text-shadow:0 3px 35px #122f4780;color:#f7fbff;font-weight:600}.accent-line{height:3px;width:66px;background:var(--lime);margin:auto;border-radius:10px;box-shadow:0 0 22px #95bd1e60}.lead{font-size:clamp(17px,1.7vw,23px);line-height:1.7;margin:30px 0 26px;color:#edf5fa;font-weight:500}.lead span{color:#a9becf;font-weight:400}.start{display:flex;gap:40px;align-items:center;justify-content:space-between;font-size:18px;padding:18px 26px;border:1px solid #c6e46c55;min-width:295px;box-shadow:0 0 32px #95bd1e16}.start span{font-size:25px;font-weight:400}.hint{font-size:14px;color:#a7bdce;margin:20px 0 0;line-height:1.5}.idle-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px;border-top:1px solid #ffffff12;padding-top:20px;color:#839eb3}.bottom-mark,.bottom-counter{font-size:9px;letter-spacing:1.6px;line-height:1.5}.bottom-counter b{color:var(--lime);padding:0 7px}.prototype-note{font-size:10px;margin:0}.eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;color:var(--blue);margin-top:30px}p{line-height:1.65}
+.workspace{background:var(--bg);min-height:calc(100svh - 104px);padding:26px 3.4vw;display:grid;grid-template-columns:minmax(250px,320px) minmax(0,1fr);gap:30px}.assistant{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 25%,#1a5472,#0f2840 60%);color:#fff;border:1px solid #2a5570;border-radius:22px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;min-height:620px;box-shadow:0 15px 35px #0f284012}.assistant:after{content:'';position:absolute;pointer-events:none;inset:0;background:linear-gradient(125deg,#ffffff06,transparent 45%)}.assistant .eyebrow{color:#b7cbd9;margin-top:0;font-size:10px}.presence{height:190px;position:relative;display:grid;place-items:center;margin:16px 0}.orb{position:relative;display:grid;place-items:center;width:124px;height:124px;border-radius:50%;background:radial-gradient(circle at 28% 20%,#4694a0,#20556f 40%,#102c44 75%);border:1px solid #81c0cb66;box-shadow:inset -8px -10px 30px #041828,0 0 42px #8ab9361f;z-index:1}.orb-glyph{font-size:34px;font-weight:500;letter-spacing:-2px;color:#e3f1f4}.orbit{position:absolute;border:1px solid #80a5ba50;border-top-color:#95bd1e;width:165px;height:165px;border-radius:50%;transform:rotate(-28deg);animation:orbit-spin 45s linear infinite}.orbit-alt{width:185px;height:185px;border-color:#76a0b224;border-right-color:#95bd1e70;animation-direction:reverse}.assistant-kicker{font-size:9px;letter-spacing:2px;color:#b8d589}.assistant h2{font-size:32px;letter-spacing:-1px;line-height:1.18;margin:14px 0}.assistant p{font-size:15px;color:#bfd0dd}.mode{display:inline-block;font-size:10px;border:1px solid #8da7ba55;color:#b8d589;padding:9px 12px;border-radius:30px}.assistant-bottom{margin-top:25px;position:relative;z-index:1}.assistant-bottom small{display:block;color:#9bb2c5;font-size:10px;margin-top:12px}.human{width:100%;text-align:left;background:#ffffff0b;border:1px solid #9ab5c755;color:#fff;font-size:14px;line-height:1.5;display:flex;align-items:center;gap:15px}.human span{color:var(--lime-bright);font-size:24px}.task{padding:12px 28px 4px;min-width:0;max-width:1080px;width:100%;margin:0 auto}.progress{display:flex;gap:6px;margin-bottom:30px}.progress span{flex:1;padding:11px 3px;border-bottom:3px solid #d5e0e7;font-size:11px;color:#637785;text-align:center}.progress span.current{color:var(--navy);border-color:var(--lime);font-weight:700}.step-heading{display:flex;justify-content:space-between;align-items:center}.step-heading .eyebrow{margin:0;font-size:10px}.task h1{font-size:clamp(27px,2.7vw,40px);letter-spacing:-1.3px;line-height:1.2;margin:19px 0}.description{color:var(--muted);font-size:17px;margin:0 0 28px;max-width:740px}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{position:relative;border:1px solid #cad8e2;background:#fff;text-align:left;min-height:106px;color:var(--ink);font-size:18px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:23px;border-radius:14px;box-shadow:0 3px 9px #18345603}.card:before{content:'';position:absolute;width:3px;height:26px;background:var(--lime);left:0;top:calc(50% - 13px);border-radius:0 3px 3px 0}.card span{color:#547717;font-size:24px;font-weight:400}.card:hover:not(:disabled){border-color:#95bd1e;background:#f8fbee;box-shadow:0 8px 24px #18345609}.notice{background:#fff6df;border:1px solid #edd7a6;border-left:3px solid #b37d23;padding:15px 18px;font-size:15px;line-height:1.65;margin:20px 0;color:#624711;border-radius:0 10px 10px 0}form{margin-top:30px}label{display:block;font-size:13px;font-weight:600;margin-bottom:12px}.input-row{display:flex;gap:10px}input{width:100%;min-width:0;border:1px solid #b9ccd8;border-radius:12px;background:white;padding:16px;font-size:16px;color:var(--ink)}input::placeholder{color:#73828f}.mic{background:#e2eaf0;color:var(--blue);font-size:14px}.mic.recording{background:#a32929;color:white}.small{font-size:11px;color:#5d7180;line-height:1.6}.task-footer{margin-top:27px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}.task-footer>span{font-size:11px;color:var(--muted)}.summary{background:#fff;border:1px solid var(--line);border-top:3px solid var(--lime);border-radius:12px;padding:20px;margin-bottom:20px}.summary p{margin:7px 0;font-size:15px;overflow-wrap:anywhere}.summary strong{display:inline-block;min-width:105px}dialog{border:1px solid #d6e1e8;border-top:4px solid var(--lime);border-radius:20px;padding:34px;max-width:640px;width:90%;color:var(--ink);box-shadow:0 30px 100px #0004}dialog::backdrop{background:#051b2dd9;backdrop-filter:blur(8px)}dialog h2{font-size:25px;line-height:1.25}dialog p{font-size:15px}dt{font-weight:600;font-size:14px;margin-top:15px}dd{margin:5px 0;font-size:14px;overflow-wrap:anywhere}.dialog-actions{display:flex;gap:15px}code{font-size:13px}[hidden]{display:none!important}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}@keyframes orbit-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.motion-paused *{animation-play-state:paused!important}
+@media(min-width:1800px){.idle-center{padding-top:100px;padding-bottom:110px}.workspace{padding-left:6vw;padding-right:6vw;grid-template-columns:360px minmax(0,1fr)}.assistant{padding:36px}.task{padding-top:25px}.presence{height:230px}}
+@media(max-width:1050px){header{padding:0 24px}.product-name{display:none}.header-actions{gap:4px}.workspace{grid-template-columns:245px minmax(0,1fr);gap:18px;padding:22px}.assistant{padding:24px}.task{padding:8px 4px}.description{font-size:16px}.card{font-size:16px;padding:18px}.bottom-mark{display:none}.input-row{flex-wrap:wrap}.input-row input{flex-basis:100%}}
+@media(max-height:800px) and (min-width:700px){header{height:86px}.brand img{width:190px}.idle{min-height:calc(100svh - 86px)}.idle-center{padding:34px 0 36px}.idle h1{font-size:clamp(60px,8vw,110px);margin:14px 0 20px}.lead{margin:23px 0 20px;font-size:19px}.hint{margin-top:15px}.start{padding:14px 22px}.workspace{min-height:calc(100svh - 86px)}.assistant{min-height:570px}.presence{height:150px}.orb{width:104px;height:104px}.orbit{width:135px;height:135px}.orbit-alt{width:153px;height:153px}}
+@media(max-width:700px){header{height:80px;padding:0 16px;gap:10px}.brand{padding:8px 10px}.brand img{width:150px}.header-actions .demo{display:none}header .quiet{font-size:10px;padding:7px}.header-actions{gap:0}.idle{padding:22px 20px 20px;min-height:calc(100svh - 80px)}.idle-topline{font-size:8px;letter-spacing:1.1px}.idle-topline>span:first-child{display:none}.idle-topline{justify-content:center}.idle-center{padding:65px 0 80px}.availability{font-size:10px;letter-spacing:2.5px}.idle h1{font-size:clamp(35px,9vw,62px);letter-spacing:.005em;margin:24px 0}.lead{font-size:16px;margin-top:28px}.hint{font-size:12px;max-width:270px}.start{min-width:260px;font-size:16px}.halo-one{width:120vw}.halo-two{width:100vw}.halo-three{width:80vw}.idle-bottom{justify-content:center}.bottom-counter{display:none}.prototype-note{font-size:9px}.workspace{display:block;padding:18px;min-height:calc(100svh - 80px)}.assistant{min-height:0;padding:18px;margin-bottom:25px;border-radius:16px}.assistant>div:first-child{display:flex;flex-wrap:wrap;align-items:center;gap:12px}.assistant .presence{height:58px;width:58px;margin:0}.orb{height:48px;width:48px}.orb-glyph{font-size:19px;letter-spacing:-1px}.orbit{width:58px;height:58px}.orbit-alt,.assistant .eyebrow,.assistant h2,.assistant-kicker,.assistant-bottom p,.assistant-bottom small{display:none}.assistant-bottom{margin-top:14px}.assistant p{font-size:12px;max-width:170px;margin:0}.mode{font-size:9px}.human{font-size:13px;justify-content:space-between;min-height:48px}.progress{margin-bottom:20px;gap:3px}.progress span{font-size:9px}.task{padding:0}.task h1{font-size:28px;letter-spacing:-.7px}.choices{grid-template-columns:1fr;gap:12px}.card{min-height:82px;font-size:17px}.dialog-actions{flex-direction:column}.description{font-size:16px}.task-footer .quiet{font-size:12px}.task-footer>span{font-size:10px}dialog{padding:24px}.notice{font-size:14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Fondo orbital: movimiento visible */
+.ambient {
+  animation: sd-drift 10s ease-in-out infinite alternate;
+}
+
+.halo-one {
+  border: 2px solid transparent;
+  border-top-color: #95bd1eaa;
+  border-right-color: #51b5d477;
+  animation: sd-turn 18s linear infinite;
+}
+
+.halo-two {
+  border: 2px dashed #6dabc13b;
+  border-bottom-color: #b3db47bb;
+  animation: sd-turn 13s linear infinite reverse;
+}
+
+.halo-three {
+  border: 2px solid transparent;
+  border-left-color: #95bd1e99;
+  border-bottom-color: #54c1df88;
+  animation: sd-sway 7s ease-in-out infinite alternate;
+}
+
+.halo::after {
+  content: "";
+  position: absolute;
+  top: 14%;
+  right: 14%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c6e96e;
+  box-shadow: 0 0 22px #95bd1e;
+}
+
+@keyframes sd-turn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sd-sway {
+  from { transform: rotate(-45deg) scale(.96); }
+  to { transform: rotate(55deg) scale(1.04); }
+}
+
+@keyframes sd-drift {
+  from { transform: translate(-12px, -6px); }
+  to { transform: translate(12px, 8px); }
+}
+
+/* Orbe preparado para reaccionar a la voz */
+.orb {
+  --voice: 0;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform .12s ease, box-shadow .2s ease;
+  background: radial-gradient(circle at 35% 30%, #245f80, #071b30 75%);
+}
+
+.orb::before,
+.orb::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  z-index: -1;
+  border-radius: 42% 58% 65% 35%;
+  filter: blur(9px);
+  background: conic-gradient(
+    #95bd1e, #2bd4df, #667cff, #b8ee69, #95bd1e
+  );
+  opacity: .35;
+  animation: sd-turn 12s linear infinite;
+}
+
+.orb::after {
+  inset: 25%;
+  animation-direction: reverse;
+}
+
+.orb[data-state="listening"] {
+  transform: scale(calc(1 + var(--voice) * .2));
+  box-shadow: 0 0 38px #95bd1e60, 0 0 65px #2bd4df30;
+}
+
+.orb[data-state="listening"]::before,
+.orb[data-state="listening"]::after {
+  opacity: .95;
+  animation-duration: 3s;
+}
+
+.orb[data-state="listening"] .orb-glyph {
+  opacity: 0;
+}
+
+.orb[data-state="processing"]::before {
+  opacity: .75;
+  animation-duration: 2s;
+}
+
+.orb-preview {
+  margin-top: 16px;
+  font-size: 12px;
+  min-height: 42px;
+}
+
+.orb-preview-note {
+  font-size: 11px !important;
+  color: #c5dd9c !important;
+}
+
+.motion-paused *,
+.motion-paused *::before,
+.motion-paused *::after {
+  animation-play-state: paused !important;
+}
+
+.motion-paused .orb {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb { transform: none !important; }
+}
+
+/* === SD: fondo animado y asesora protagonista === */
+
+/* Sustituimos visualmente los aros anteriores. */
+#idle .ambient {
+  display: none !important;
+}
+
+#sdLens {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* La asesora ocupa una columna amplia. */
+#active.workspace {
+  grid-template-columns: minmax(300px, 42%) minmax(0, 1fr);
+  align-items: start;
+}
+
+#active .assistant {
+  position: sticky;
+  top: 16px;
+  min-height: 0;
+  padding: 22px;
+  background: #0f2840;
+}
+
+#active .assistant > div:first-child {
+  display: block;
+}
+
+#active .presence {
+  display: block;
+  width: 100%;
+  height: clamp(280px, 48vh, 540px);
+  margin: 12px 0 18px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #0f2840;
+}
+
+/* Conservamos el orbe en el código para su integración futura. */
+#active .presence > :not(.sd-portrait),
+#active .assistant h2,
+#active .assistant-kicker,
+#orbPreview,
+.orb-preview-note {
+  display: none !important;
+}
+
+.sd-portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+#active .assistant .eyebrow {
+  display: block;
+  color: #b3db47;
+}
+
+#active #presenceState {
+  max-width: none;
+  margin: 12px 0;
+  color: #fff;
+  font-size: 17px;
+}
+
+#active .assistant-bottom {
+  margin-top: 18px;
+}
+
+#active .assistant-bottom > p {
+  display: none;
+}
+
+#sdOptions {
+  min-height: 56px;
+  margin: 0 0 18px;
+  padding: 14px 26px;
+  font-size: 18px;
+}
+
+#choices[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 800px) {
+  #active.workspace {
+    display: block;
+    padding: 16px;
+  }
+
+  #active .assistant {
+    top: 0;
+    z-index: 2;
+    padding: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px #071c3040;
+  }
+
+  #active .presence {
+    height: 200px;
+    margin: 8px 0;
+  }
+
+  #active .assistant .eyebrow {
+    margin-bottom: 4px;
+  }
+
+  #active #presenceState {
+    margin: 8px 0;
+    font-size: 14px;
+  }
+
+  #active .mode,
+  #active .assistant-bottom small {
+    display: none;
+  }
+
+  #active .assistant-bottom {
+    margin-top: 8px;
+  }
+}
+
+/* === SD: atención estilo videoconferencia === */
+
+body.sd-call {
+  overflow: hidden;
+}
+
+#active.workspace {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: block;
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #24536a, #071b2b 75%);
+  color: white;
+}
+
+/* El retrato pasa a ser el escenario completo. */
+#active .sd-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+#active .sd-stage .sd-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+}
+
+#active .sd-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #04131e55,
+    transparent 22%,
+    transparent 55%,
+    #04131e80
+  );
+}
+
+/* Desaparece el antiguo panel de la izquierda. */
+#active .assistant {
+  display: none !important;
+}
+
+/* Superficies de cristal con contraste para leer. */
+#active .sd-glass,
+#active .task,
+#active .card,
+#active input,
+#active .summary,
+#active .notice {
+  background: #0c263bbd;
+  border: 1px solid #ffffff36;
+  color: #fff;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 35px #00000020;
+}
+
+/* Controles superiores. */
+#active .sd-toolbar {
+  position: absolute;
+  inset: 20px 24px auto;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#active .sd-call-label {
+  margin-left: auto;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+#active .sd-toolbar button {
+  width: auto;
+  margin: 0;
+  min-height: 52px;
+  border-radius: 14px;
+  color: white;
+  font-size: 15px;
+}
+
+#active #sdOptions {
+  color: #d4f28a;
+}
+
+/* Menú desplegable izquierdo. */
+#active .sd-drawer {
+  position: absolute;
+  top: 92px;
+  bottom: 24px;
+  left: 24px;
+  z-index: 5;
+  width: 300px;
+  padding: 18px;
+  border-radius: 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+#active .sd-drawer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+#active .sd-drawer-heading h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+#active .sd-drawer-heading button {
+  background: transparent;
+  color: white;
+  font-size: 14px;
+}
+
+#active #choices {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+#active .card {
+  min-height: 82px;
+  padding: 18px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+#active .card span {
+  color: #c7ec73;
+}
+
+#active .card:hover:not(:disabled) {
+  background: #315242db;
+  border-color: #b3db47;
+}
+
+/* Conversación flotante sobre la parte inferior del retrato. */
+#active .task {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(650px, calc(100% - 48px));
+  max-width: none;
+  max-height: 43dvh;
+  overflow-y: auto;
+  padding: 18px 24px;
+  margin: 0;
+  border-radius: 22px;
+  z-index: 3;
+}
+
+#active .progress,
+#active .step-heading,
+#active .task-footer {
+  display: none;
+}
+
+#active #title {
+  margin: 0 0 8px;
+  color: white;
+  font-size: clamp(22px, 2vw, 30px);
+  letter-spacing: -.5px;
+}
+
+#active #title:focus {
+  outline: none;
+}
+
+#active #description {
+  color: #e0eaf1;
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+
+#active #chat {
+  margin: 12px 0 0;
+}
+
+#active #inputLabel {
+  color: #edf5fa;
+}
+
+#active .input-row {
+  flex-wrap: nowrap;
+}
+
+#active .input-row input {
+  flex-basis: auto;
+}
+
+#active input::placeholder {
+  color: #c0d0dc;
+}
+
+#active #voiceHint {
+  color: #c4d3de;
+  margin-bottom: 0;
+}
+
+#active #mic,
+#active #back {
+  background: #ffffff18;
+  color: white;
+  border: 1px solid #ffffff35;
+}
+
+#active #back {
+  margin-top: 10px;
+}
+
+#active .summary,
+#active .notice {
+  margin: 12px 0;
+}
+
+#active button:focus-visible,
+#active input:focus-visible {
+  outline: 3px solid #c7ec73;
+  outline-offset: 3px;
+}
+
+@media (max-width: 800px) {
+  #active .sd-toolbar {
+    inset: 12px 12px auto;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #active .sd-call-label {
+    display: none;
+  }
+
+  #active .sd-toolbar button {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  #active .sd-drawer {
+    top: 132px;
+    bottom: 46dvh;
+    left: 12px;
+    width: 44%;
+    padding: 10px;
+  }
+
+  #active .sd-drawer-heading {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  #active .card {
+    padding: 12px;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  #active.sd-menu-open .sd-stage .sd-portrait {
+    object-position: right top;
+  }
+
+  #active .task {
+    bottom: 12px;
+    width: calc(100% - 24px);
+    padding: 16px;
+  }
+
+  #active .input-row {
+    flex-wrap: wrap;
+  }
+
+  #active .input-row input {
+    flex-basis: 100%;
+  }
+}
+
+/* === SD: escenario limpio y controles laterales === */
+
+#active.workspace {
+  --side: min(26vw, 340px);
+  background: #0f2840;
+}
+
+/* Reservamos los costados para no cubrir a la asesora. */
+#active .sd-stage {
+  left: calc(var(--side) + 32px);
+  right: calc(var(--side) + 32px);
+  background: transparent;
+}
+
+#active .sd-stage .sd-portrait,
+#active.sd-menu-open .sd-stage .sd-portrait {
+  object-fit: contain;
+  object-position: center bottom;
+  background: transparent;
+}
+
+#active .sd-stage::after {
+  display: none;
+}
+
+/* Eliminamos completamente el recuadro central. */
+#active .task {
+  display: contents;
+}
+
+#active .sd-glass,
+#active .card,
+#active input,
+#active .summary,
+#active .notice {
+  background: rgb(255 255 255 / 7%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 28px #00000015;
+  color: #fff;
+}
+
+/* Opciones e instrucciones: lado izquierdo. */
+#active .sd-drawer {
+  width: var(--side);
+  left: 16px;
+  top: 90px;
+  bottom: 180px;
+  padding: 16px;
+}
+
+#active .sd-drawer #title {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+#active .sd-drawer #description {
+  font-size: 16px;
+}
+
+#active .sd-drawer .summary {
+  padding: 12px;
+}
+
+#active .sd-drawer .summary strong {
+  min-width: 0;
+}
+
+#active .card:hover:not(:disabled) {
+  background: rgb(149 189 30 / 20%);
+}
+
+/* Avisos operativos también permanecen a un costado. */
+#active > #message {
+  position: absolute;
+  left: 16px;
+  bottom: 20px;
+  width: var(--side);
+  max-height: 140px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 12px;
+  z-index: 6;
+}
+
+/* Acceso discreto al chat: esquina inferior derecha. */
+#active #sdChatToggle {
+  position: absolute;
+  right: 16px;
+  bottom: 20px;
+  width: var(--side);
+  z-index: 6;
+  border-radius: 16px;
+  padding: 16px;
+  color: #fff;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+#sdChatToggle strong {
+  display: block;
+  color: #d4eea0;
+  font-weight: 600;
+}
+
+/* Chat lateral, cerrado inicialmente. */
+#active #sdChatPanel {
+  position: absolute;
+  right: 16px;
+  top: 90px;
+  bottom: 140px;
+  width: var(--side);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 16px;
+  min-height: 0;
+}
+
+#active #sdChatPanel[hidden] {
+  display: none !important;
+}
+
+.sd-chat-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sd-chat-heading h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+#active .sd-chat-heading button {
+  background: transparent;
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+}
+
+#sdChatLog {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 0;
+}
+
+.sd-outgoing {
+  width: fit-content;
+  max-width: 94%;
+  margin: 0 0 12px auto;
+  padding: 12px 14px;
+  border-radius: 16px 16px 4px 16px;
+  border: 1px solid #b3db4745;
+  background: #95bd1e25;
+  color: white;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.sd-outgoing small {
+  display: block;
+  margin-top: 6px;
+  color: #d4dfc0;
+  font-size: 11px;
+}
+
+#active #sdChatPanel #chat {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid #ffffff26;
+}
+
+#active #sdChatPanel .input-row {
+  flex-wrap: wrap;
+}
+
+#active #sdChatPanel input {
+  flex-basis: 100%;
+  font-size: 16px;
+}
+
+#active #sdChatPanel #mic {
+  display: none;
+}
+
+#active #sdChatPanel button[type="submit"] {
+  width: 100%;
+}
+
+#active #voiceHint {
+  font-size: 12px;
+}
+
+@media (max-width: 800px) {
+  #active.workspace {
+    --side: 29vw;
+  }
+
+  #active .sd-stage {
+    left: calc(var(--side) + 20px);
+    right: calc(var(--side) + 20px);
+  }
+
+  #active .sd-drawer,
+  #active #sdChatPanel {
+    top: 140px;
+    padding: 10px;
+  }
+
+  #active .sd-drawer,
+  #active > #message {
+    left: 8px;
+  }
+
+  #active #sdChatPanel,
+  #active #sdChatToggle {
+    right: 8px;
+  }
+
+  #active #sdChatToggle {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .sd-chat-heading {
+    flex-wrap: wrap;
+  }
+}

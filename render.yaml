@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: security-data-asistente-poc
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -c gunicorn.conf.py public_demo:app
+    healthCheckPath: /healthz

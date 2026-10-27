@@ -1,0 +1,12 @@
+__pycache__/
+.venv/
+.env
+models/
+*.log
+.env.*
+*.bak
+*.bak-*
+*.rar
+*.zip
+.DS_Store
+Thumbs.db
