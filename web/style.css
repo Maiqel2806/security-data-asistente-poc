@@ -792,3 +792,217 @@ body.sd-call {
     flex-wrap: wrap;
   }
 }
+
+/* === SD: diseño adaptable === */
+#active.workspace {
+  height: var(--sd-visible-height, 100dvh);
+}
+
+#active .card {
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: normal;
+}
+
+#active input { font-size: 16px; }
+
+@media (max-width: 1100px), (orientation: portrait) {
+  #active.workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: max(8px, env(safe-area-inset-top))
+             max(12px, env(safe-area-inset-right))
+             max(8px, env(safe-area-inset-bottom))
+             max(12px, env(safe-area-inset-left));
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #active .sd-toolbar {
+    position: static;
+    inset: auto;
+    order: 1;
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  #active .sd-call-label { display: none; }
+
+  #active .sd-toolbar button {
+    flex: 1 1 auto;
+    min-height: 44px;
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  /* La asesora aprovecha el espacio disponible. */
+  #active .sd-stage {
+    position: relative;
+    inset: auto;
+    order: 2;
+    flex: 1 1 0;
+    width: 100%;
+    min-height: 120px;
+    overflow: hidden;
+  }
+
+  #active .sd-stage .sd-portrait,
+  #active.sd-menu-open .sd-stage .sd-portrait {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 12%;
+  }
+
+  /* Panel inferior separado de la imagen. */
+  #active .sd-drawer,
+  #active #sdChatPanel {
+    position: relative;
+    inset: auto;
+    transform: none;
+    order: 3;
+    flex: 0 1 44%;
+    width: 100%;
+    max-width: 860px;
+    max-height: min(44%, 380px);
+    min-height: 180px;
+    align-self: center;
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: 18px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #active .sd-drawer-heading,
+  #active .sd-chat-heading {
+    flex-wrap: nowrap;
+    margin-bottom: 8px;
+  }
+
+  #active .sd-drawer-heading h2,
+  #active .sd-chat-heading h2 {
+    font-size: 18px;
+  }
+
+  #active .sd-drawer #title {
+    font-size: clamp(20px, 2.4vw, 30px);
+    margin: 8px 0;
+  }
+
+  #active .sd-drawer #description {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  #active #choices {
+    grid-template-columns:
+      repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 10px;
+  }
+
+  #active .card {
+    min-height: 64px;
+    padding: 14px 16px;
+    font-size: 17px;
+  }
+
+  #active #sdChatPanel #chat {
+    flex: 0 0 auto;
+  }
+
+  #active #sdChatPanel .input-row {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  #active #sdChatPanel input {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 0;
+    padding: 12px;
+  }
+
+  #active #sdChatPanel button[type="submit"] {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 12px 16px;
+  }
+
+  #active #sdChatLog {
+    flex: 1 1 auto;
+    min-height: 28px;
+    padding: 4px 0;
+  }
+
+  #active #inputLabel { margin-bottom: 6px; }
+  #active #voiceHint { margin: 6px 0 0; }
+
+  #active #sdChatToggle {
+    position: static;
+    inset: auto;
+    order: 5;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 860px;
+    min-height: 48px;
+    align-self: center;
+    padding: 8px 14px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  #active #sdChatToggle strong {
+    display: inline;
+    margin-left: 6px;
+  }
+
+  #active > #message {
+    position: static;
+    inset: auto;
+    order: 4;
+    flex: 0 0 auto;
+    width: 100%;
+    max-height: 80px;
+    margin: 0;
+    font-size: 14px;
+    overflow-y: auto;
+  }
+}
+
+/* Celular horizontal o poca altura por el teclado. */
+@media (max-width: 1100px) and (max-height: 480px) {
+  #active .sd-stage { min-height: 100px; }
+
+  #active .sd-drawer,
+  #active #sdChatPanel {
+    flex-basis: 230px;
+    max-height: 230px;
+  }
+}
+
+/* Encabezado de bienvenida en celulares. */
+@media (max-width: 700px) {
+  body > header {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 80px;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  body > header .brand img { width: 130px; }
+
+  body > header .header-actions {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+}

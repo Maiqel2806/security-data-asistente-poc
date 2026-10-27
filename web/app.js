@@ -486,3 +486,66 @@ function publicDemoLabels(){
   if(settings[0])settings[0].textContent='Demo pública para revisar la interfaz y un trámite simulado. Use Ver opciones o el chat. No hay conversación libre con IA ni audio conectado.';
   if(settings[1])settings[1].textContent='No se conecta al Registro Civil, pagos ni emisión. Las sesiones son temporales y pueden perderse al reiniciar el alojamiento.';
 }
+
+
+/* === SD: comportamiento adaptable === */
+(() => {
+  const active = document.getElementById('active');
+  const drawer = document.getElementById('sdDrawer');
+  const chat = document.getElementById('sdChatPanel');
+  const optionsButton = document.getElementById('sdOptions');
+  const chatButton = document.getElementById('sdChatToggle');
+
+  if (!active || !drawer || !chat || active.dataset.responsiveReady) {
+    return;
+  }
+
+  active.dataset.responsiveReady = 'true';
+
+  const compact = matchMedia(
+    '(max-width: 1100px), (orientation: portrait)'
+  );
+
+  function closeOptions() {
+    drawer.hidden = true;
+    document.getElementById('choices').hidden = true;
+    active.classList.remove('sd-menu-open');
+    optionsButton.setAttribute('aria-expanded', 'false');
+    optionsButton.textContent = '☰ Ver opciones';
+  }
+
+  function closeChat() {
+    chat.hidden = true;
+    chatButton.setAttribute('aria-expanded', 'false');
+    chatButton.querySelector('strong').textContent =
+      'Podemos chatear. Presione aquí';
+  }
+
+  optionsButton.addEventListener('click', () => {
+    if (compact.matches && !drawer.hidden) closeChat();
+  });
+
+  chatButton.addEventListener('click', () => {
+    if (compact.matches && !chat.hidden) closeOptions();
+  });
+
+  compact.addEventListener('change', () => {
+    if (compact.matches && !drawer.hidden && !chat.hidden) {
+      closeOptions();
+    }
+  });
+
+  function resize() {
+    const height =
+      window.visualViewport?.height || window.innerHeight;
+
+    active.style.setProperty(
+      '--sd-visible-height',
+      Math.round(height) + 'px'
+    );
+  }
+
+  window.addEventListener('resize', resize);
+  window.visualViewport?.addEventListener('resize', resize);
+  resize();
+})();
