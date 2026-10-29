@@ -1,0 +1,11 @@
+gunicorn==26.2.0
+faster-whisper>=1.2,<2
+opencv-python-headless>=4.8,<5
+numpy>=1.26,<3
+onnxruntime>=1.17,<2
+pyclipper>=1.2
+Shapely>=2.0.5,<3
+PyYAML>=6,<7
+Pillow>=10,<13
+six>=1.15
+tqdm>=4

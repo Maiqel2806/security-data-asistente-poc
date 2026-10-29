@@ -10,3 +10,4 @@ models/
 *.zip
 .DS_Store
 Thumbs.db
+local_data/

@@ -1,4 +1,4 @@
-"""Public review demo. Simulated engine only; no local AI or real providers."""
+"""Public pilot with server-side OCR/STT; SD providers remain simulated."""
 import hashlib
 import hmac
 import json
@@ -12,7 +12,11 @@ from http.cookies import SimpleCookie
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from engine import Session, simple_intent
+from local_engine import Session
+from web_services import capabilities, run_media, MediaBusy
+
+def simple_intent(step, value):
+    return None
 
 ROOT = Path(__file__).resolve().parent / 'web'
 SECRET = secrets.token_bytes(32)
@@ -26,10 +30,10 @@ HOSTS = {f'localhost:{PORT}', f'127.0.0.1:{PORT}'}
 if PUBLIC_HOST:
     HOSTS.add(PUBLIC_HOST)
 CSP = ("default-src 'self'; script-src 'self'; style-src 'self'; "
-       "connect-src 'self'; img-src 'self' data:; object-src 'none'; "
+       "connect-src 'self'; media-src 'self' blob:; img-src 'self' data:; object-src 'none'; "
        "base-uri 'none'; form-action 'self'; frame-ancestors 'none'")
 FILES = {'/': ROOT / 'index.html', '/app.js': ROOT / 'app.js',
-         '/style.css': ROOT / 'style.css'}
+         '/style.css': ROOT / 'style.css', '/local-app.js': ROOT / 'local-app.js', '/local.css': ROOT / 'local.css'}
 FILES.update({f'/assets/{p.name}': p for p in (ROOT / 'assets').iterdir()
               if p.is_file() and p.suffix in {'.png', '.ttf'}})
 
@@ -44,7 +48,7 @@ def response(start, data, status=200, content_type=None, extra=(), head=False):
                ('Content-Length', str(len(body))), ('Cache-Control', 'no-store'),
                ('Content-Security-Policy', CSP), ('X-Content-Type-Options', 'nosniff'),
                ('Referrer-Policy', 'no-referrer'),
-               ('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')]
+               ('Permissions-Policy', 'camera=(self), microphone=(self), geolocation=()')]
     start(f'{status} {HTTPStatus(status).phrase}', headers + list(extra))
     return [b'' if head else body]
 
@@ -70,8 +74,7 @@ def app(env, start):
                 owner = owner or secrets.token_urlsafe(32)
                 secure = '; Secure' if PUBLIC_HOST else ''
                 return reply(dict(token=token(owner), model='', model_available=False,
-                                  installed=[], voice=False, public_demo=True,
-                                  voice_error='Demo pública: voz y modelo pendientes de conexión.'),
+                                  installed=[], public_demo=True, local_flow=True, **capabilities()),
                              extra=[('Set-Cookie', f'sd_demo={owner}; Path=/; HttpOnly; SameSite=Strict{secure}')],
                              head=method == 'HEAD')
             file = FILES.get(path)
@@ -79,10 +82,13 @@ def app(env, start):
                 return reply({'error': 'No encontrado.'}, 404)
             content_type = {'.js': 'application/javascript', '.ttf': 'font/ttf'}.get(file.suffix)
             content_type = content_type or mimetypes.guess_type(file.name)[0] or 'application/octet-stream'
-            return reply(file.read_bytes(), content_type=content_type, head=method == 'HEAD')
+            body = file.read_bytes()
+            if path == '/':
+                body = body.replace(b'src="/app.js"', b'src="/local-app.js"').replace(b'</head>', b'<link rel="stylesheet" href="/local.css"></head>')
+            return reply(body, content_type=content_type, head=method == 'HEAD')
         if method != 'POST':
             return reply({'error': 'Método no permitido.'}, 405)
-        if path not in {'/api/start', '/api/action', '/api/end', '/api/transcribe'}:
+        if path not in {'/api/start', '/api/action', '/api/end', '/api/transcribe', '/api/ocr'}:
             return reply({'error': 'No encontrado.'}, 404)
         supplied = env.get('HTTP_X_SD_TOKEN', '')
         if not owner or not hmac.compare_digest(supplied, token(owner)):
@@ -91,8 +97,25 @@ def app(env, start):
         scheme = 'https' if PUBLIC_HOST else env.get('wsgi.url_scheme', 'http')
         if origin and origin != f'{scheme}://{host}':
             return reply({'error': 'Origen no permitido.'}, 403)
-        if path == '/api/transcribe':
-            return reply({'error': 'La voz no está conectada en esta demo pública.'}, 503)
+        if path in {'/api/transcribe', '/api/ocr'}:
+            with LOCK:
+                now = time.monotonic()
+                active = any(who == owner and now - session.touched <= TTL for who, session in SESSIONS.values())
+            if not active:
+                return reply({'error': 'Inicie una atención antes de usar cámara o micrófono.'}, 403)
+            size = int(env.get('CONTENT_LENGTH') or 0)
+            if not 0 < size <= 8_000_000:
+                return reply({'error': 'Captura demasiado grande.'}, 413)
+            raw = env['wsgi.input'].read(size)
+            try:
+                return reply(run_media(path, raw, owner))
+            except MediaBusy:
+                return reply({'error': 'El servidor está procesando otra captura. Intente nuevamente.'}, 429)
+            except ValueError:
+                return reply({'error': 'No se pudo leer la captura. Repita o use la entrada escrita.'}, 400)
+            except Exception as exc:
+                print('Media unavailable:', type(exc).__name__, flush=True)
+                return reply({'error': 'El reconocimiento no está disponible. Use el chat o reintente.'}, 503)
         length = int(env.get('CONTENT_LENGTH') or 0)
         if not 0 <= length <= 12000:
             return reply({'error': 'Mensaje demasiado largo.'}, 413)

@@ -1,0 +1,10 @@
+/* Piloto local: campos accesibles e indicador real de escucha. */
+#sdFields { margin: 12px 0; }
+#sdFields input { display:block; width:100%; margin:6px 0 14px; font-size:16px; }
+#sdFields button { width:100%; margin-bottom:12px; }
+#sdListening { position:absolute; bottom:12px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; max-width:95%; padding:10px 16px; border-radius:30px; background:#0f2840b8; border:1px solid #ffffff38; backdrop-filter:blur(14px); color:white; font-size:14px; pointer-events:none; }
+.sd-listening-orb { width:28px; height:28px; flex-shrink:0; border-radius:50%; background:conic-gradient(#95bd1e,#53c6ed,#b787ff,#95bd1e); opacity:.45; }
+#sdListening[data-status="listening"] .sd-listening-orb { opacity:1; transform:scale(calc(1 + var(--level,0))); box-shadow:0 0 18px #53c6ed88; }
+#sdListening[data-status="speaking"] .sd-listening-orb { opacity:1; }
+#sdCamera video { display:block; width:100%; max-height:45vh; object-fit:contain; background:#0f2840; }
+#sdCamera button { margin:8px 8px 0 0; }
